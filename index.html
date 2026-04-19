@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' https://images.unsplash.com data: blob:; connect-src 'self'; object-src 'none';">
+    <title>Anandhu Pradeep | Interactive Mind-Map</title>
+    <meta name="description" content="Official homepage of Anandhu Pradeep - MCA Student & Web Developer. An interactive digital identity map showcasing portfolio, certificates, and social presence.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Navigation Bar -->
+        <nav class="top-nav">
+            <div class="nav-brand">
+                <span class="brand-name">Anandhu Pradeep</span>
+            </div>
+            
+            <div class="nav-right">
+                <div id="nav-download-btn" class="download-card glass-card-mini" style="cursor: pointer;">
+                    <div class="card-details">
+                        <span class="cv-title">Card</span>
+                        <span class="cv-size">Preview</span>
+                    </div>
+                    <div class="download-icon">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Background Canvas for Connections -->
+        <canvas id="connections-canvas"></canvas>
+        
+        <!-- Background Glows -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+        <div class="bg-glow bg-glow-3"></div>
+        
+        <!-- Nodes Container -->
+        <div id="mind-map">
+            <!-- Center Node -->
+            <div id="center-node" class="node identity-node">
+                <div class="node-content">
+                    <div class="profile-frame">
+                        <img src="MyProfilePicture.jpeg" alt="Anandhu Pradeep" class="profile-img">
+                        <div class="pulse-ring"></div>
+                    </div>
+                    <div class="identity-info">
+                        <h1>Anandhu Pradeep</h1>
+                        <p class="subtitle">MCA Student | Web Developer</p>
+                    </div>
+                    <div id="explore-prompt" class="explore-prompt">
+                        <p>Click Here <i class="fas fa-hand-pointer pulse-icon"></i></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Satellite Nodes (Generated via JS for placement logic) -->
+            <div id="satellite-nodes"></div>
+        </div>
+
+        <!-- Floating Popup Card -->
+        <div id="popup-overlay" class="hidden">
+            <div id="popup-card" class="glass-card">
+                <button id="close-popup" aria-label="Close"><i class="fas fa-times"></i></button>
+                <div class="popup-body">
+                    <div class="popup-header">
+                        <div class="popup-icon-wrapper">
+                            <i id="popup-icon" class="fas fa-briefcase"></i>
+                        </div>
+                        <h2 id="popup-title">Portfolio</h2>
+                    </div>
+                    <div class="popup-content">
+                        <p id="popup-desc">Explore my latest projects and technical implementations.</p>
+                        <div class="popup-image-container">
+                            <img id="popup-preview" src="../portflio/MyProfilePicture.jpeg" alt="Preview">
+                        </div>
+                    </div>
+                    <div class="popup-footer">
+                        <a href="#" id="visit-btn" target="_blank" rel="noopener noreferrer" class="cyber-btn">
+                            <span>Visit</span>
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Identity Business Card Popup -->
+        <div id="identity-popup-overlay" class="hidden">
+            <div id="identity-card" class="glass-card b-card">
+                <button id="close-identity-popup" aria-label="Close"><i class="fas fa-times"></i></button>
+                <div class="b-card-content">
+                    <!-- Wavy Background -->
+                    <div class="b-card-waves">
+                        <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                            <path fill="rgba(0, 240, 181, 0.2)" d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,218.7C672,213,768,139,864,122.7C960,107,1056,149,1152,176C1248,203,1344,213,1392,218.7L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                            <path fill="rgba(255, 94, 126, 0.2)" d="M0,128L48,154.7C96,181,192,235,288,245.3C384,256,480,224,576,192C672,160,768,128,864,133.3C960,139,1056,181,1152,197.3C1248,213,1344,203,1392,197.3L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                        </svg>
+                    </div>
+
+                    <div class="b-card-layout">
+                        <!-- Left Info -->
+                        <div class="b-card-left">
+                            <h2 class="b-card-name">Anandhu Pradeep</h2>
+                            <p class="b-card-title">Developer</p>
+                            <div class="b-card-divider"></div>
+
+                            <ul class="b-card-contact">
+                                <li>
+                                    <div class="c-icon-wrapper"><i class="fas fa-phone-alt"></i></div>
+                                    <div class="c-text-wrapper">
+                                        <span>+91 9383469371</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="c-icon-wrapper"><i class="fas fa-globe"></i></div>
+                                    <div class="c-text-wrapper">
+                                        <span>anandhupradeep.com</span>
+                                        <span>anandhupradeep177@gmail.com</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="c-icon-wrapper"><i class="fas fa-map-marker-alt"></i></div>
+                                    <div class="c-text-wrapper">
+                                        <span>Pathanamthitta,</span>
+                                        <span>Kerala, India</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Right Image -->
+                        <div class="b-card-right">
+                            <div class="b-card-img-container">
+                                <img src="../portflio/MyProfilePicture.jpeg" alt="Anandhu Pradeep">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="b-card-footer">
+                        <button id="identity-download-btn" class="cyber-btn" style="border:none; cursor:pointer;">
+                            <span>Download Card</span>
+                            <i class="fas fa-cloud-download-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- html2canvas for downloading the card -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Vanilla Tilt for 3D effect -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
