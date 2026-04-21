@@ -100,11 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span>${data.title}</span>
             `;
 
-            if (window.innerWidth > 768) {
-                // Initialize at center, we will update left/top dynamically
-                nodeEl.style.left = `calc(50% - 80px)`;
-                nodeEl.style.top = `calc(50% - 80px)`;
-            }
+            // Initialize at center, we will update left/top dynamically
+            nodeEl.style.left = `calc(50% - 80px)`;
+            nodeEl.style.top = `calc(50% - 80px)`;
 
             satelliteContainer.appendChild(nodeEl);
             
@@ -162,35 +160,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Animation Loop for Floating and Connections
     function animate() {
-        if (window.innerWidth > 768) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Interpolate expansion progress smoothly
-            const targetProgress = isExpanded ? 1 : 0;
-            expansionProgress += (targetProgress - expansionProgress) * 0.08;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Interpolate expansion progress smoothly
+        const targetProgress = isExpanded ? 1 : 0;
+        expansionProgress += (targetProgress - expansionProgress) * 0.08;
 
-            if (expansionProgress > 0.01) { // Only calculate/draw if active
-                const time = Date.now() * 0.001;
-                const centerX = canvas.width / 2;
-                const centerY = canvas.height / 2;
+        if (expansionProgress > 0.01) { // Only calculate/draw if active
+            const time = Date.now() * 0.001;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
 
-                nodes.forEach(node => {
-                    // Floating movement
-                    const levitateY = Math.sin(time + node.levitateOffset) * 15;
-                    const levitateX = Math.cos(time * 0.8 + node.levitateOffset) * 10;
-                    
-                    // Multiply target offset by expansion progress
-                    const currentX = centerX + (node.x * expansionProgress) + levitateX;
-                    const currentY = centerY + (node.y * expansionProgress) + levitateY;
+            nodes.forEach(node => {
+                // Floating movement
+                const levitateY = Math.sin(time + node.levitateOffset) * 15;
+                const levitateX = Math.cos(time * 0.8 + node.levitateOffset) * 10;
+                
+                // Multiply target offset by expansion progress
+                const currentX = centerX + (node.x * expansionProgress) + levitateX;
+                const currentY = centerY + (node.y * expansionProgress) + levitateY;
 
-                    // Update DOM element position using left/top to avoid interfering with Vanilla Tilt's transform
-                    node.el.style.left = `calc(50% - 80px + ${(node.x * expansionProgress) + levitateX}px)`;
-                    node.el.style.top = `calc(50% - 80px + ${(node.y * expansionProgress) + levitateY}px)`;
+                // Update DOM element position using left/top to avoid interfering with Vanilla Tilt's transform
+                node.el.style.left = `calc(50% - 80px + ${(node.x * expansionProgress) + levitateX}px)`;
+                node.el.style.top = `calc(50% - 80px + ${(node.y * expansionProgress) + levitateY}px)`;
 
-                    // Draw Connection line (only if expanded enough)
-                    drawConnection(centerX, centerY, currentX, currentY, node.color, time, expansionProgress);
-                });
-            }
+                // Draw Connection line (only if expanded enough)
+                drawConnection(centerX, centerY, currentX, currentY, node.color, time, expansionProgress);
+            });
         }
 
         animationId = requestAnimationFrame(animate);
